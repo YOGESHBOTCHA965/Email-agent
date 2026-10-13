@@ -7,6 +7,7 @@ import os
 import re
 import smtplib
 import ssl
+import sys
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -296,6 +297,9 @@ def main():
     print('Review limit reached. Nothing sent.')
 
 if __name__ == '__main__':
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, 'reconfigure'):
+            stream.reconfigure(encoding='utf-8', errors='replace')
     load_env()
     try:
         main()
